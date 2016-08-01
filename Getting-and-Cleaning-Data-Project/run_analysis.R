@@ -33,39 +33,39 @@ names(xTest) <- features
 xTest <- xTest[,requiredFeatures]
 
 # Assign activity labels for test data
-yTest[,2] = activityLabels[yTest[,1]]
-names(yTest) = c("ActivityId", "Activity")
-names(subjectTest) = "Subject"
+yTest[,2] <-  activityLabels[yTest[,1]]
+names(yTest) <-  c("ActivityId", "Activity")
+names(subjectTest) <-  "Subject"
 
 # Bind test data
 testData <- cbind(as.data.table(subjectTest), yTest, xTest)
 
 # Assign new column names to train data
-names(xTrain) = features
+names(xTrain) <-  features
 
 # Extract only the measurements on the mean and standard deviation for each measurement.
-xTrain = xTrain[,requiredFeatures]
+xTrain <-  xTrain[,requiredFeatures]
 
 # Assign activity labels for train data
-yTrain[,2] = activityLabels[yTrain[,1]]
-names(yTrain) = c("ActivityId", "Activity")
-names(subjectTrain) = "Subject"
+yTrain[,2] <-  activityLabels[yTrain[,1]]
+names(yTrain) <-  c("ActivityId", "Activity")
+names(subjectTrain) <-  "Subject"
 
 # Bind train data
 trainData <- cbind(as.data.table(subjectTrain), yTrain, xTrain)
 
 # Merge test and train datasets
-newData = rbind(testData, trainData)
+newData <- rbind(testData, trainData)
 
 # Define our column names
-columnLabels   = c("Subject", "ActivityId", "Activity")
+columnLabels <- c("Subject", "ActivityId", "Activity")
 
 # Create row labels out of the columns in new data that are not our id's
-rowLabels = setdiff(colnames(newData), columnLabels)
-mData = melt(newData, id = columnLabels, measure.vars = rowLabels)
+rowLabels <-  setdiff(colnames(newData), columnLabels)
+mData <- melt(newData, id = columnLabels, measure.vars = rowLabels)
 
 # Aggregate the dataset using the mean function
-outputData = dcast(mData, Subject + Activity ~ variable, mean)
+outputData <-  dcast(mData, Subject + Activity ~ variable, mean)
 
 
 # Output the final dataset
